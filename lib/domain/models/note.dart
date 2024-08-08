@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
-import 'package:flutter/widgets.dart';
 
 class Note extends Equatable {
   final String title;
@@ -62,14 +61,14 @@ class Note extends Equatable {
     String? content,
     int? color,
     int? timestamp,
-    ValueGetter<int?>? id,
+    int? id,
   }) {
     return Note(
       title: title ?? this.title,
       content: content ?? this.content,
       color: color ?? this.color,
       timestamp: timestamp ?? this.timestamp,
-      id: id != null ? id() : this.id,
+      id: id ?? this.id,
     );
   }
 }

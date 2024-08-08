@@ -1,29 +1,21 @@
 import 'dart:convert';
-import 'package:equatable/equatable.dart';
-import 'package:flutter_note_app/domain/entities/note.dart';
 
-class NoteModel extends Equatable {
+import 'package:equatable/equatable.dart';
+import 'package:flutter/widgets.dart';
+
+class Note extends Equatable {
   final String title;
   final String content;
   final int color;
   final int timestamp;
   final int? id;
-  const NoteModel({
+  const Note({
     required this.title,
     required this.content,
     required this.color,
     required this.timestamp,
     this.id,
   });
-
-  Note toEntity() {
-    return Note(
-      title: title,
-      content: content,
-      color: color,
-      timestamp: timestamp,
-    );
-  }
 
   @override
   List<Object?> get props {
@@ -36,6 +28,11 @@ class NoteModel extends Equatable {
     ];
   }
 
+  @override
+  String toString() {
+    return 'Note(title: $title, content: $content, color: $color, timestamp: $timestamp, id: $id)';
+  }
+
   Map<String, dynamic> toMap() {
     return {
       'title': title,
@@ -46,8 +43,8 @@ class NoteModel extends Equatable {
     };
   }
 
-  factory NoteModel.fromMap(Map<String, dynamic> map) {
-    return NoteModel(
+  factory Note.fromMap(Map<String, dynamic> map) {
+    return Note(
       title: map['title'] ?? '',
       content: map['content'] ?? '',
       color: map['color']?.toInt() ?? 0,
@@ -58,27 +55,21 @@ class NoteModel extends Equatable {
 
   String toJson() => json.encode(toMap());
 
-  factory NoteModel.fromJson(String source) =>
-      NoteModel.fromMap(json.decode(source));
+  factory Note.fromJson(String source) => Note.fromMap(json.decode(source));
 
-  NoteModel copyWith({
+  Note copyWith({
     String? title,
     String? content,
     int? color,
     int? timestamp,
-    int? id,
+    ValueGetter<int?>? id,
   }) {
-    return NoteModel(
+    return Note(
       title: title ?? this.title,
       content: content ?? this.content,
       color: color ?? this.color,
       timestamp: timestamp ?? this.timestamp,
-      id: id ?? this.id,
+      id: id != null ? id() : this.id,
     );
-  }
-
-  @override
-  String toString() {
-    return 'NoteModel(title: $title, content: $content, color: $color, timestamp: $timestamp, id: $id)';
   }
 }

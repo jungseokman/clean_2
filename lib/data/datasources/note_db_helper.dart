@@ -1,9 +1,9 @@
 import 'package:flutter_note_app/domain/models/note.dart';
 import 'package:sqflite/sqflite.dart';
 
-class NoteDb {
+class NoteDbHelper {
   final Database db;
-  NoteDb({
+  NoteDbHelper({
     required this.db,
   });
 

@@ -11,10 +11,7 @@ void main(List<String> args) async {
       await MainDi.getRepositoryProvider();
   runApp(MultiRepositoryProvider(
     providers: repositoryProviders,
-    child: MultiBlocProvider(
-      providers: MainDi.getBlocProvider(),
-      child: const MyApp(),
-    ),
+    child: const MyApp(),
   ));
 }
 
@@ -23,32 +20,35 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        primaryColor: Colors.white,
-        scaffoldBackgroundColor: darkGray,
-        canvasColor: darkGray,
-        floatingActionButtonTheme:
-            Theme.of(context).floatingActionButtonTheme.copyWith(
-                  backgroundColor: Colors.white,
-                  foregroundColor: darkGray,
+    return MultiBlocProvider(
+      providers: MainDi.getBlocProvider(),
+      child: MaterialApp(
+        theme: ThemeData(
+          primaryColor: Colors.white,
+          scaffoldBackgroundColor: darkGray,
+          canvasColor: darkGray,
+          floatingActionButtonTheme:
+              Theme.of(context).floatingActionButtonTheme.copyWith(
+                    backgroundColor: Colors.white,
+                    foregroundColor: darkGray,
+                  ),
+          appBarTheme: Theme.of(context).appBarTheme.copyWith(
+                backgroundColor: darkGray,
+                titleTextStyle: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 30,
                 ),
-        appBarTheme: Theme.of(context).appBarTheme.copyWith(
-              backgroundColor: darkGray,
-              titleTextStyle: const TextStyle(
-                color: Colors.white,
-                fontSize: 30,
+                iconTheme: const IconThemeData(
+                  color: Colors.white,
+                ),
+                actionsIconTheme: const IconThemeData(
+                  color: Colors.white,
+                ),
               ),
-              iconTheme: const IconThemeData(
-                color: Colors.white,
-              ),
-              actionsIconTheme: const IconThemeData(
-                color: Colors.white,
-              ),
-            ),
+        ),
+        debugShowCheckedModeBanner: false,
+        home: const NotesPage(),
       ),
-      debugShowCheckedModeBanner: false,
-      home: const NotesPage(),
     );
   }
 }

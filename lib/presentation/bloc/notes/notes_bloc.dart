@@ -34,7 +34,6 @@ class NotesBloc extends Bloc<NotesEvent, NotesState> {
             notesDeleteStatus: NotesDeleteStatus.success,
             recentlyDeleteNote: event.note,
           ));
-          add(GetNotesEvent());
         } catch (e) {
           print(e);
           emit(state.copyWith(notesDeleteStatus: NotesDeleteStatus.failure));
@@ -48,7 +47,6 @@ class NotesBloc extends Bloc<NotesEvent, NotesState> {
           try {
             await repository.createNote(state.recentlyDeleteNote!);
             emit(state.copyWith(recentlyDeleteNote: null));
-            add(GetNotesEvent());
           } catch (e) {
             print(e);
           }
@@ -62,7 +60,8 @@ class NotesBloc extends Bloc<NotesEvent, NotesState> {
         try {
           await repository.createNote(event.note);
           emit(state.copyWith(notesUpdateStatus: NotesUpdateStatus.success));
-          add(GetNotesEvent());
+
+          emit(NotesState.initial());
         } catch (e) {
           print(e);
           emit(state.copyWith(notesUpdateStatus: NotesUpdateStatus.failure));
@@ -77,7 +76,8 @@ class NotesBloc extends Bloc<NotesEvent, NotesState> {
         try {
           await repository.createNote(event.note);
           emit(state.copyWith(notesCreateStatus: NotesCreateStatus.success));
-          add(GetNotesEvent());
+
+          emit(NotesState.initial());
         } catch (e) {
           print(e);
           emit(state.copyWith(notesCreateStatus: NotesCreateStatus.failure));

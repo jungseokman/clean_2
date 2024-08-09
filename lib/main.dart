@@ -1,9 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_note_app/config/colors.dart';
+import 'package:flutter_note_app/di/main_di.dart';
 import 'package:flutter_note_app/presentation/pages/notes/notes_page.dart';
 
-void main(List<String> args) {
-  runApp(const MyApp());
+void main(List<String> args) async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  List<RepositoryProvider> repositoryProviders =
+      await MainDi.getRepositoryProvider();
+  runApp(MultiRepositoryProvider(
+    providers: repositoryProviders,
+    child: MultiBlocProvider(
+      providers: MainDi.getBlocProvider(),
+      child: const MyApp(),
+    ),
+  ));
 }
 
 class MyApp extends StatelessWidget {

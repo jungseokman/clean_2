@@ -41,11 +41,15 @@ class NotesPage extends StatelessWidget {
         children: noteState.notes
             .map(
               (e) => NoteItem(
+                onDeleteTap: () {
+                  noteReadBloc.add(DeleteNotesEvent(note: e));
+                },
                 note: Note(
                   title: e.title,
                   content: e.content,
                   color: e.color,
                   timestamp: e.timestamp,
+                  id: e.id,
                 ),
               ),
             )

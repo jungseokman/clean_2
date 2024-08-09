@@ -43,6 +43,16 @@ class NotesPage extends StatelessWidget {
               (e) => NoteItem(
                 onDeleteTap: () {
                   noteReadBloc.add(DeleteNotesEvent(note: e));
+
+                  final snackBar = SnackBar(
+                    content: const Text("노트가 삭제되었습니다."),
+                    action: SnackBarAction(
+                        label: '취소',
+                        onPressed: () {
+                          noteReadBloc.add(RestoreNotesEvent());
+                        }),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
                 },
                 note: Note(
                   title: e.title,

@@ -30,6 +30,18 @@ class _AddEditNotePageState extends State<AddEditNotePage> {
       TextEditingController();
 
   Color color = roseBud;
+  int? id;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.note != null) {
+      textEditingController.text = widget.note!.title;
+      contentEditingController.text = widget.note!.content;
+      color = Color(widget.note!.color);
+      id = widget.note!.id;
+    }
+  }
 
   @override
   void dispose() {
@@ -54,8 +66,12 @@ class _AddEditNotePageState extends State<AddEditNotePage> {
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             DateTime now = DateTime.now();
-            int formattedDate = int.parse(
-                '${now.year}${now.month.toString().padLeft(2, '0')}${now.day.toString().padLeft(2, '0')}');
+            int formattedDate = int.parse('${now.year}'
+                '${now.month.toString().padLeft(2, '0')}'
+                '${now.day.toString().padLeft(2, '0')}'
+                '${now.hour.toString().padLeft(2, '0')}'
+                '${now.minute.toString().padLeft(2, '0')}'
+                '${now.second.toString().padLeft(2, '0')}');
             if (textEditingController.text.isEmpty ||
                 contentEditingController.text.isEmpty) {
               const snackBar = SnackBar(content: Text("제목이나 내용이 비어 있습니다."));
@@ -74,6 +90,7 @@ class _AddEditNotePageState extends State<AddEditNotePage> {
             } else {
               noteReadBloc.add(UpdateNotesEvent(
                   note: Note(
+                id: id,
                 title: textEditingController.text,
                 content: contentEditingController.text,
                 color: color.value,

@@ -14,9 +14,7 @@ class NotesBloc extends Bloc<NotesEvent, NotesState> {
       emit(state.copyWith(notesGetStatus: NotesGetStatus.loading));
       try {
         List<Note> notes = await noteUsecase.getNotes();
-        notes.sort(
-          (a, b) => -a.timestamp.compareTo(b.timestamp),
-        );
+
         emit(state.copyWith(
             notes: notes, notesGetStatus: NotesGetStatus.success));
       } catch (e) {

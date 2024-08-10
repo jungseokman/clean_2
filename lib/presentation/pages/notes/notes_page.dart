@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_note_app/domain/models/note.dart';
 import 'package:flutter_note_app/presentation/bloc/notes/notes_bloc.dart';
 import 'package:flutter_note_app/presentation/pages/add_edit_note/add_edit_note_page.dart';
 import 'package:flutter_note_app/presentation/widgets/note_item.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class NotesPage extends StatefulWidget {
   const NotesPage({super.key});

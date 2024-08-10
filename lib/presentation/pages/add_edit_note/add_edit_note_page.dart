@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_note_app/config/colors.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_note_app/config/colors.dart';
 import 'package:flutter_note_app/domain/models/note.dart';
 import 'package:flutter_note_app/presentation/bloc/notes/notes_bloc.dart';
 

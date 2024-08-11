@@ -13,10 +13,17 @@ class NotesBloc extends Bloc<NotesEvent, NotesState> {
     on<GetNotesEvent>((event, emit) async {
       emit(state.copyWith(notesGetStatus: NotesGetStatus.loading));
       try {
-        List<Note> notes = await noteUsecase.getNotes();
+        final order = event.order ?? state.notesOrder;
+        final type = event.type ?? state.notesType;
+
+        List<Note> notes = await noteUsecase.getNotes(order, type);
 
         emit(state.copyWith(
-            notes: notes, notesGetStatus: NotesGetStatus.success));
+          notes: notes,
+          notesOrder: event.order,
+          notesType: event.type,
+          notesGetStatus: NotesGetStatus.success,
+        ));
       } catch (e) {
         print(e);
         emit(state.copyWith(notesGetStatus: NotesGetStatus.failure));
@@ -32,7 +39,7 @@ class NotesBloc extends Bloc<NotesEvent, NotesState> {
             notesDeleteStatus: NotesDeleteStatus.success,
             recentlyDeleteNote: event.note,
           ));
-          add(GetNotesEvent());
+          add(const GetNotesEvent());
         } catch (e) {
           print(e);
           emit(state.copyWith(notesDeleteStatus: NotesDeleteStatus.failure));
@@ -46,7 +53,7 @@ class NotesBloc extends Bloc<NotesEvent, NotesState> {
           try {
             await noteUsecase.createNote(state.recentlyDeleteNote!);
             emit(state.copyWith(recentlyDeleteNote: null));
-            add(GetNotesEvent());
+            add(const GetNotesEvent());
           } catch (e) {
             print(e);
           }
@@ -60,12 +67,13 @@ class NotesBloc extends Bloc<NotesEvent, NotesState> {
         try {
           await noteUsecase.updateNote(event.note);
           emit(state.copyWith(notesUpdateStatus: NotesUpdateStatus.success));
-          add(GetNotesEvent());
-          emit(state.copyWith(notesUpdateStatus: NotesUpdateStatus.initail));
+          add(const GetNotesEvent());
         } catch (e) {
           print(e);
           emit(state.copyWith(notesUpdateStatus: NotesUpdateStatus.failure));
         }
+
+        emit(state.copyWith(notesUpdateStatus: NotesUpdateStatus.initail));
       },
     );
 
@@ -76,12 +84,13 @@ class NotesBloc extends Bloc<NotesEvent, NotesState> {
         try {
           await noteUsecase.createNote(event.note);
           emit(state.copyWith(notesCreateStatus: NotesCreateStatus.success));
-          add(GetNotesEvent());
-          emit(state.copyWith(notesCreateStatus: NotesCreateStatus.initail));
+          add(const GetNotesEvent());
         } catch (e) {
           print(e);
           emit(state.copyWith(notesCreateStatus: NotesCreateStatus.failure));
         }
+
+        emit(state.copyWith(notesCreateStatus: NotesCreateStatus.initail));
       },
     );
   }

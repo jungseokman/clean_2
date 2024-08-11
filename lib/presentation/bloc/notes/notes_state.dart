@@ -8,6 +8,10 @@ enum NotesCreateStatus { initail, loading, success, failure }
 
 enum NotesUpdateStatus { initail, loading, success, failure }
 
+enum NotesOrder { title, date, color }
+
+enum NotesType { asc, desc }
+
 class NotesState extends Equatable {
   final List<Note> notes;
   final Note? recentlyDeleteNote;
@@ -15,6 +19,9 @@ class NotesState extends Equatable {
   final NotesCreateStatus notesCreateStatus;
   final NotesUpdateStatus notesUpdateStatus;
   final NotesDeleteStatus notesDeleteStatus;
+  final NotesOrder notesOrder;
+  final NotesType notesType;
+
   const NotesState({
     required this.notes,
     this.recentlyDeleteNote,
@@ -22,6 +29,8 @@ class NotesState extends Equatable {
     required this.notesCreateStatus,
     required this.notesUpdateStatus,
     required this.notesDeleteStatus,
+    required this.notesOrder,
+    required this.notesType,
   });
 
   factory NotesState.initial() {
@@ -32,6 +41,8 @@ class NotesState extends Equatable {
       notesCreateStatus: NotesCreateStatus.initail,
       notesDeleteStatus: NotesDeleteStatus.initail,
       notesUpdateStatus: NotesUpdateStatus.initail,
+      notesOrder: NotesOrder.date,
+      notesType: NotesType.desc,
     );
   }
 
@@ -44,6 +55,8 @@ class NotesState extends Equatable {
       notesCreateStatus,
       notesUpdateStatus,
       notesDeleteStatus,
+      notesOrder,
+      notesType,
     ];
   }
 
@@ -54,6 +67,8 @@ class NotesState extends Equatable {
     NotesCreateStatus? notesCreateStatus,
     NotesUpdateStatus? notesUpdateStatus,
     NotesDeleteStatus? notesDeleteStatus,
+    NotesOrder? notesOrder,
+    NotesType? notesType,
   }) {
     return NotesState(
       notes: notes ?? this.notes,
@@ -62,11 +77,13 @@ class NotesState extends Equatable {
       notesCreateStatus: notesCreateStatus ?? this.notesCreateStatus,
       notesUpdateStatus: notesUpdateStatus ?? this.notesUpdateStatus,
       notesDeleteStatus: notesDeleteStatus ?? this.notesDeleteStatus,
+      notesOrder: notesOrder ?? this.notesOrder,
+      notesType: notesType ?? this.notesType,
     );
   }
 
   @override
   String toString() {
-    return 'NotesState(notes: $notes, recentlyDeleteNote: $recentlyDeleteNote, notesGetStatus: $notesGetStatus, notesCreateStatus: $notesCreateStatus, notesUpdateStatus: $notesUpdateStatus, notesDeleteStatus: $notesDeleteStatus)';
+    return 'NotesState(notes: $notes, recentlyDeleteNote: $recentlyDeleteNote, notesGetStatus: $notesGetStatus, notesCreateStatus: $notesCreateStatus, notesUpdateStatus: $notesUpdateStatus, notesDeleteStatus: $notesDeleteStatus, notesOrder: $notesOrder, notesType: $notesType)';
   }
 }

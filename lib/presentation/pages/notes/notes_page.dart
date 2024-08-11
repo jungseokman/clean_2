@@ -16,7 +16,7 @@ class _NotesPageState extends State<NotesPage> {
   @override
   void initState() {
     super.initState();
-    context.read<NotesBloc>().add(GetNotesEvent());
+    context.read<NotesBloc>().add(const GetNotesEvent());
   }
 
   @override

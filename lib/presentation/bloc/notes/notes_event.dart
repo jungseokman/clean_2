@@ -7,7 +7,21 @@ sealed class NotesEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class GetNotesEvent extends NotesEvent {}
+class GetNotesEvent extends NotesEvent {
+  final NotesOrder? order;
+  final NotesType? type;
+
+  const GetNotesEvent({
+    this.order,
+    this.type,
+  });
+
+  @override
+  List<Object> get props => [
+        order ?? NotesOrder.date,
+        type ?? NotesType.desc,
+      ];
+}
 
 class DeleteNotesEvent extends NotesEvent {
   final Note note;

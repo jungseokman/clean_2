@@ -10,6 +10,7 @@ class GetNotes {
 
   Future<List<Note>> call(NotesOrder order, NotesType type) async {
     List<Note> notes = await repository.getNotes();
+    print("test");
 
     switch (order) {
       case NotesOrder.date:

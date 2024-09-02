@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_note_app/config/colors.dart';
-import 'package:flutter_note_app/di/main_di.dart';
+import 'package:flutter_note_app/di/di_setup.dart';
+import 'package:flutter_note_app/presentation/bloc/notes/notes_bloc.dart';
 import 'package:flutter_note_app/presentation/pages/notes/notes_page.dart';
 
 void main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  List<RepositoryProvider> repositoryProviders =
-      await MainDi.getRepositoryProvider();
-  runApp(MultiRepositoryProvider(
-    providers: repositoryProviders,
-    child: const MyApp(),
-  ));
+  await configureDependencies();
+
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -21,7 +19,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers: MainDi.getBlocProvider(),
+      providers: [
+        BlocProvider(
+          create: (context) => getIt<NotesBloc>(),
+        ),
+      ],
       child: MaterialApp(
         theme: ThemeData(
           primaryColor: Colors.white,

@@ -1,7 +1,9 @@
 import 'package:flutter_note_app/domain/models/note.dart';
 import 'package:flutter_note_app/domain/repositories/note_repository.dart';
 import 'package:flutter_note_app/presentation/bloc/notes/notes_bloc.dart';
+import 'package:injectable/injectable.dart';
 
+@singleton
 class GetNotes {
   final NoteRepository repository;
   GetNotes({

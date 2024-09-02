@@ -2,10 +2,12 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_note_app/domain/models/note.dart';
 import 'package:flutter_note_app/domain/usecases/notes/note_usecase.dart';
+import 'package:injectable/injectable.dart';
 
 part 'notes_event.dart';
 part 'notes_state.dart';
 
+@singleton
 class NotesBloc extends Bloc<NotesEvent, NotesState> {
   final NoteUsecase noteUsecase;
 

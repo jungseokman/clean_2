@@ -3,7 +3,9 @@ import 'package:flutter_note_app/domain/usecases/notes/delete_note.dart';
 import 'package:flutter_note_app/domain/usecases/notes/get_note.dart';
 import 'package:flutter_note_app/domain/usecases/notes/get_notes.dart';
 import 'package:flutter_note_app/domain/usecases/notes/update_note.dart';
+import 'package:injectable/injectable.dart';
 
+@singleton
 class NoteUsecase {
   final GetNote getNote;
   final CreateNote createNote;
